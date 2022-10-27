@@ -7,7 +7,7 @@ package redis
 
 import (
 	"fmt"
-	"gitee/yaobase/utils/log"
+	"github.com/zyzp5217758/YBUtils/log"
 	"sync"
 	"time"
 

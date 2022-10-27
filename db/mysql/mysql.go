@@ -7,7 +7,7 @@ package mysql
 
 import (
 	"fmt"
-	"gitee/yaobase/utils/log"
+	"github.com/zyzp5217758/YBUtils/log"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

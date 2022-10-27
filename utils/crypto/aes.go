@@ -10,7 +10,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
-	"gitee/yaobase/utils/log"
+	"github.com/zyzp5217758/YBUtils/log"
 )
 
 // paddingText1

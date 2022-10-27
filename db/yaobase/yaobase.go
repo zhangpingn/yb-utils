@@ -8,10 +8,10 @@ package yaobase
 import (
 	"database/sql"
 	"fmt"
-	"gitee/yaobase/utils/log"
-	"gitee/yaobase/utils/utils/crypto"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/patrickmn/go-cache"
+	"github.com/zyzp5217758/YBUtils/log"
+	"github.com/zyzp5217758/YBUtils/utils/crypto"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"strings"

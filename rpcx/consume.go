@@ -7,8 +7,8 @@ package rpcx
 
 import (
 	"context"
-	"gitee/yaobase/utils/log"
 	"github.com/smallnest/rpcx/client"
+	"github.com/zyzp5217758/YBUtils/log"
 )
 
 // Consume
