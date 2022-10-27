@@ -1,4 +1,4 @@
-module gitee/yaobase/utils
+module github.com/zyzp5217758/YBUtils
 
 go 1.18
 
