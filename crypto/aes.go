@@ -10,7 +10,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
-	"github.com/zyzp5217758/YBUtils/log"
+	"github.com/zhangpingn/yb-utils/log"
 )
 
 // paddingText1

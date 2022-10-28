@@ -7,7 +7,7 @@ package mysql
 
 import (
 	"fmt"
-	"github.com/zyzp5217758/YBUtils/log"
+	"github.com/zhangpingn/yb-utils/log"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

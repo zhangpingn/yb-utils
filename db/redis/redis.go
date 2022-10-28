@@ -7,7 +7,7 @@ package redis
 
 import (
 	"fmt"
-	"github.com/zyzp5217758/YBUtils/log"
+	"github.com/zhangpingn/yb-utils/log"
 	"sync"
 	"time"
 

@@ -6,15 +6,14 @@
 package utils
 
 import (
-	"YBFacadeService/common"
-	"YBFacadeService/components/log"
-	ybhttp "YBFacadeService/utils/http"
 	"bytes"
 	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/go-playground/validator/v10"
+	ybhttp "github.com/zhangpingn/yb-utils/http"
+	"github.com/zhangpingn/yb-utils/log"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"math/big"
@@ -26,6 +25,11 @@ import (
 	"reflect"
 	"runtime"
 	"strings"
+)
+
+const (
+	DATA_ALEADY_EXISTS = "数据已存在"
+	FAILURE            = "失败"
 )
 
 // CreateSecret
@@ -308,9 +312,9 @@ func ClientIP(r *http.Request) string {
 //		无
 func GetMessageByErr(err error) string {
 	if strings.HasPrefix(err.Error(), "Error 1062:") {
-		return common.DataAlreadyExists
+		return DATA_ALEADY_EXISTS
 	} else if errors.Is(err, gorm.ErrRecordNotFound) {
-		return common.DataDoesNotExist
+		return DATA_ALEADY_EXISTS
 	} else if fieldErrors, ok := err.(validator.ValidationErrors); ok {
 		switch fieldErrors[0].Kind() {
 		case reflect.String:
@@ -320,7 +324,7 @@ func GetMessageByErr(err error) string {
 		}
 		return fieldErrors[0].Field() + " " + fieldErrors[0].Tag()
 	}
-	return common.Failure
+	return FAILURE
 }
 
 // CmdPing
@@ -369,9 +373,9 @@ func CmdPing(host string) (result bool, err error) {
 //		加密算法切片
 //   [in/out]
 //		无
-func GetCipherSuites() []uint16 {
+func GetCipherSuites(sslCipher string) []uint16 {
 	var cipherSuites []uint16
-	ciphers := strings.Split(common.Config.Ssl.SslCipher, ":")
+	ciphers := strings.Split(sslCipher, ":")
 	for _, v := range ciphers {
 		switch v {
 		case "ECDHE-ECDSA-AES256-GCM-SHA384":
@@ -510,7 +514,7 @@ func IsPicture(fileSuffix string) bool {
 //		更新中出现的错误
 //   [in/out]
 //		无
-func ReloadRule(metricId, businessId int) error {
+func ReloadRule(metricId, businessId int, monitorHost string) error {
 
 	var paramMap = make(map[string]int)
 	paramMap["business_id"] = businessId
@@ -521,7 +525,7 @@ func ReloadRule(metricId, businessId int) error {
 		return err
 	}
 
-	_, reloadRes, err := ybhttp.Put(fmt.Sprintf("%s/alarm/rule/reload", common.Config.MonitorHost), "", string(reloadData))
+	_, reloadRes, err := ybhttp.Put(fmt.Sprintf("%s/alarm/rule/reload", monitorHost), "", string(reloadData))
 	if err != nil {
 		log.Error(fmt.Sprintf("更新业务(%d)的指标类型为%d的规则失败", businessId, metricId), zap.Error(err))
 		return err
@@ -545,9 +549,9 @@ func ReloadRule(metricId, businessId int) error {
 //		更新中出现的错误
 //   [in/out]
 //		无
-func ReloadAlertmanager() error {
+func ReloadAlertmanager(monitorHost string) error {
 
-	_, reloadRes, err := ybhttp.Put(fmt.Sprintf("%s/alarm/alertmanger/reload", common.Config.MonitorHost), "", "")
+	_, reloadRes, err := ybhttp.Put(fmt.Sprintf("%s/alarm/alertmanger/reload", monitorHost), "", "")
 	if err != nil {
 		log.Error("更新alertmanager.yml失败", zap.Error(err))
 		return err

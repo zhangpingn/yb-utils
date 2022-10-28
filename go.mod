@@ -1,4 +1,4 @@
-module github.com/zyzp5217758/YBUtils
+module github.com/zhangpingn/yb-utils
 
 go 1.18
 

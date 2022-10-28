@@ -8,7 +8,7 @@ package rpcx
 import (
 	"context"
 	"github.com/smallnest/rpcx/client"
-	"github.com/zyzp5217758/YBUtils/log"
+	"github.com/zhangpingn/yb-utils/log"
 )
 
 // Consume
