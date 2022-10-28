@@ -5,10 +5,6 @@
 
 package result
 
-import (
-	"YBFacadeService/common"
-)
-
 // PageData 分页模型，用于进行传递分页功能的参数
 type PageData struct {
 	PageNum  int64 `form:"page_num" json:"page_num"`   // 当前页数
@@ -36,7 +32,7 @@ func (p *PageData) GetPage(flag int, count ...int64) {
 	}
 	start := p.PageNum
 	switch flag {
-	case common.REDIS:
+	case 0:
 		p.PageNum = (p.PageNum - 1) * p.PageSize
 		// redis的lrange是包含尾端
 		if p.PageSize == 1 {
@@ -44,7 +40,7 @@ func (p *PageData) GetPage(flag int, count ...int64) {
 		} else {
 			p.PageSize = (start-1)*p.PageSize + p.PageSize - 1
 		}
-	case common.MYSQL:
+	case 1:
 		if len(count) > 0 {
 			// 当总条数小于当前分页的数量时，应该返回所有数据，及limit 0,总条数
 			if p.PageSize >= count[0] {
