@@ -18,6 +18,7 @@ type User struct {
 	UserFullName string `json:"user_full_name"`
 	Email        string `json:"email"`
 	Phone        string `json:"phone"`
+	Ip           string `json:"ip"`
 }
 
 type UserLoginRes struct {
